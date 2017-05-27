@@ -27,7 +27,7 @@
         .then(function (response) {
           return response.json()
         }).then(function (data) {
-          hash.value = data
+          hash.value = data.sha256
           display(hash.value)
           clearInterval(charLoop)
         }).catch(function (error) {
