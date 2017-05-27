@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+  </head>
+  <body style="background:#000000; padding: 24px">
+    <div style="word-wrap: break-word;" class="">
+      <p style="font-family: 'VT323', monospace; color: #32fd72; font-size: 6em">Give me a hash, <span style="font-size: 1.25em; color: #fd3258; text-shadow: 2px 2px 2px #32fd72">NOW!</span></p>
+      <span style="font-family: 'VT323', monospace; color: #02e148; font-size: 5.5em" class="hashCode"></span>
+    </div>
+
+    <script type="text/javascript">
+      let hash = {
+        value: 0
+      }
+
+      var charLoop = setInterval(function () {
+        display(trashCharsGen())
+      }, 25)
+
+      getHash()
+
+      function getHash () {
+        fetch('https://sha256.now.sh')
+        .then(function (response) {
+          return response.json()
+        }).then(function (data) {
+          hash.value = data
+          display(hash.value)
+          clearInterval(charLoop)
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
+
+      function display (hashCode) {
+        document.querySelector('.hashCode').innerHTML = hashCode
+      }
+
+      function trashCharsGen () {
+        let trashCode = ''
+        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+*~#$%&'
+
+        for (let i = 0; i < 64; i++) {
+          trashCode += chars.charAt(Math.floor(Math.random() * chars.length))
+        }
+
+        return trashCode
+      }
+    </script>
+  </body>
+</html>
